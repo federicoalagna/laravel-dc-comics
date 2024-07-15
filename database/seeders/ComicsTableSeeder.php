@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+
 class ComicsTableSeeder extends Seeder
 {
     public function run()
@@ -227,8 +228,3 @@ class ComicsTableSeeder extends Seeder
         DB::table('comics')->insert($comics);
     }
 }
-
-
-$comics = include('/path/to/comics.php');
-
-DB::table('comics')->insert($comics);

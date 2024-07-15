@@ -35,4 +35,28 @@ class ComicController extends Controller
         Comic::create($data);
         return redirect()->route('comics.index');
     }
+
+    public function edit(Comic $comic)
+    {
+        return view('comics.edit', compact('comic'));
+    }
+
+    public function update(Request $request, Comic $comic)
+    {
+        $data = $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'description' => 'required',
+            'cover_image' => 'required',
+        ]);
+
+        $comic->update($data);
+        return redirect()->route('comics.show', $comic->id);
+    }
+
+    public function destroy(Comic $comic)
+    {
+        $comic->delete();
+        return redirect()->route('comics.index');
+    }
 }
