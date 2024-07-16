@@ -25,15 +25,18 @@ class ComicController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
+        // regole di validazione
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required|max:255',
             'description' => 'required',
-            'cover_image' => 'required',
+            'cover_image' => 'required|url',
         ]);
 
-        Comic::create($data);
-        return redirect()->route('comics.index');
+        // creazione di  un nuovo fumetto
+        Comic::create($validatedData);
+
+        return redirect()->route('comics.index')->with('success', 'Fumetto aggiunto con successo!');
     }
 
     public function edit(Comic $comic)
@@ -43,20 +46,23 @@ class ComicController extends Controller
 
     public function update(Request $request, Comic $comic)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
+        // regole di validazione
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required|max:255',
             'description' => 'required',
-            'cover_image' => 'required',
+            'cover_image' => 'required|url',
         ]);
 
-        $comic->update($data);
-        return redirect()->route('comics.show', $comic->id);
+        // aggiornamento del fumetto
+        $comic->update($validatedData);
+
+        return redirect()->route('comics.show', $comic->id)->with('success', 'Fumetto aggiornato con successo!');
     }
 
     public function destroy(Comic $comic)
     {
         $comic->delete();
-        return redirect()->route('comics.index');
+        return redirect()->route('comics.index')->with('success', 'Fumetto eliminato con successo!');
     }
 }
