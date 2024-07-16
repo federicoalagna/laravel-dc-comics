@@ -5,8 +5,15 @@
         <h1>Fumetti</h1>
         <a href="{{ route('comics.create') }}" class="btn btn-primary">Aggiungi un nuovo Fumetto</a>
     </div>
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="row">
-        @foreach ($comics as $comic)
+        @forelse($comics as $comic)
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <img src="{{ $comic->cover_image }}" class="card-img-top" alt="{{ $comic->title }}">
@@ -17,6 +24,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p>Nessun fumetto disponibile.</p>
+        @endforelse
     </div>
 @endsection
